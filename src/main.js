@@ -9,8 +9,6 @@ import {
 } from './js/render-functions.js';
 
 const searchForm = document.querySelector('.form');
-const galleryList = document.querySelector('.gallery');
-const loader = document.querySelector('.loader-container');
 
 searchForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -26,8 +24,8 @@ searchForm.addEventListener('submit', event => {
     return;
   }
 
-  clearGallery(galleryList);
-  showLoader(loader);
+  clearGallery();
+  showLoader();
 
   getImagesByQuery(searchQuery)
     .then(data => {
@@ -41,7 +39,7 @@ searchForm.addEventListener('submit', event => {
         return;
       }
 
-      renderGallery(galleryList, data.hits);
+      renderGallery(data.hits);
     })
     .catch(error => {
       iziToast.error({
@@ -52,7 +50,7 @@ searchForm.addEventListener('submit', event => {
       console.error('API Error:', error);
     })
     .finally(() => {
-      hideLoader(loader);
+      hideLoader();
       searchForm.reset();
     });
 });
